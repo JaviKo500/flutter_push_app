@@ -1,4 +1,7 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:push_app/presentation/blocs/notifications/notifications_bloc.dart';
 
 
 class HomeScreen extends StatelessWidget {
@@ -9,14 +12,31 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Status permissions',
-          style: TextStyle()
+        title: context.select(
+          ( NotificationsBloc bloc ) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text( 
+                'Status permissions',
+                style: TextStyle()
+              ),
+              Text( 
+                bloc.state.status.name,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                  color:  bloc.state.status == AuthorizationStatus.authorized
+                    ? Colors.greenAccent[100]
+                    : Colors.redAccent[100],
+                )
+              ),
+            ],
+          )
         ),
         actions: [
           IconButton(
             onPressed: () {
-              
+              context.read<NotificationsBloc>().requestPermissions();
             }, 
             icon: const Icon(Icons.settings),
           ),
