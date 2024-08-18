@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
                   color:  bloc.state.status == AuthorizationStatus.authorized
-                    ? Colors.greenAccent[100]
+                    ? Colors.greenAccent[200]
                     : Colors.redAccent[100],
                 )
               ),
