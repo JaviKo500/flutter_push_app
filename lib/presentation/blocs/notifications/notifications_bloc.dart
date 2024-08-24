@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:push_app/domain/entities/push_message.dart';
 
 import 'package:push_app/firebase_options.dart';
 
@@ -71,11 +74,18 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   // cty60I-AQNyhZfmf5TxMKB:APA91bHbAC9zhlxViOExYuB7Fo4gJS5w5CbxcXIbFej2xcV32f9ji8CwBuVQ2vWQGScRlXmK4DybtGN28wXkLpF9VP3SMBlAmrekRE4V86CXy8-tGW8Fx5gbOo9eOPCJKwiVMxCTc9z1
 
   void _handleRemoteMessage( RemoteMessage message ) {
-    print('Got a message whilst in the foreground!');
-    print('Message data: ${message.data}');
-
     if (message.notification == null) return;
-      print('Message also contained a notification: ${message.notification}');
+    final notification = PushMessage(
+      messageId: (message.messageId ?? '').replaceAll(':', '').replaceAll('%', ''), 
+      title: message.notification?.title ?? '',
+      body: message.notification?.title ?? '',
+      data: message.data,
+      url: Platform.isAndroid
+        ? message.notification?.android?.imageUrl
+        : message.notification?.apple?.imageUrl,
+      sendDate: message.sentTime ?? DateTime.now(),
+    );
+    print(notification);
   }
 
   void _onForeGroundMessage() {
