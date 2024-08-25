@@ -61,7 +61,7 @@ class _HomeView extends StatelessWidget {
       itemCount: notifications.length,
       itemBuilder: (context, index) {
         return ListTile(
-          onTap: () => context.go('/push-details/${notifications[index].messageId}'),
+          onTap: () => context.push('/push-details/${notifications[index].messageId}'),
           title:  Text(
             notifications[index].title,
             style: const TextStyle()
