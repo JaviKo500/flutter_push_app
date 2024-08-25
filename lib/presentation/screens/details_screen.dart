@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:push_app/domain/entities/push_message.dart';
 import 'package:push_app/presentation/blocs/notifications/notifications_bloc.dart';
 

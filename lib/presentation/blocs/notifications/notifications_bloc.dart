@@ -83,10 +83,10 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   }
   // cty60I-AQNyhZfmf5TxMKB:APA91bHbAC9zhlxViOExYuB7Fo4gJS5w5CbxcXIbFej2xcV32f9ji8CwBuVQ2vWQGScRlXmK4DybtGN28wXkLpF9VP3SMBlAmrekRE4V86CXy8-tGW8Fx5gbOo9eOPCJKwiVMxCTc9z1
 
-  void _handleRemoteMessage( RemoteMessage message ) {
+  void handleRemoteMessage( RemoteMessage message ) {
     if (message.notification == null) return;
     final notification = PushMessage(
-      messageId: (message.messageId ?? '').replaceAll(':', '').replaceAll('%', ''), 
+      messageId: getValidMessageId(message.messageId ?? ''), 
       title: message.notification?.title ?? '',
       body: message.notification?.title ?? '',
       data: message.data,
@@ -99,7 +99,10 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   }
 
   void _onForeGroundMessage() {
-    FirebaseMessaging.onMessage.listen(_handleRemoteMessage);
+    FirebaseMessaging.onMessage.listen(handleRemoteMessage);
+  }
+  String getValidMessageId( String messageId ) {
+    return (messageId).replaceAll(':', '').replaceAll('%', '');
   }
 
   PushMessage? getMessageById( String pushMessageId ) {
