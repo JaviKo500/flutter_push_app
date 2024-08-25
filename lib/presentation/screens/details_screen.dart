@@ -14,15 +14,8 @@ class DetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final pushMessage = context.watch<NotificationsBloc>().getMessageById(pushMessageId);
     return Scaffold(
+      
       appBar: AppBar(
-        leading: IconButton.filledTonal(
-            onPressed: () => context.pop(), 
-            icon: const Icon(Icons.arrow_back),
-            color: Colors.black,
-            style: const ButtonStyle(
-              backgroundColor: WidgetStateColor.transparent
-            ),
-        ),
         title: const Text(
           'Details push',
           style: TextStyle()
