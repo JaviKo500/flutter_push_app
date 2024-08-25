@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:push_app/presentation/blocs/notifications/notifications_bloc.dart';
 
 
@@ -60,6 +61,7 @@ class _HomeView extends StatelessWidget {
       itemCount: notifications.length,
       itemBuilder: (context, index) {
         return ListTile(
+          onTap: () => context.go('/details/${notifications[index].messageId}'),
           title:  Text(
             notifications[index].title,
             style: const TextStyle()
