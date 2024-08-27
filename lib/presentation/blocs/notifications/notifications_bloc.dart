@@ -8,13 +8,12 @@ import 'package:push_app/domain/entities/push_message.dart';
 
 import 'package:push_app/firebase_options.dart';
 
+import 'package:push_app/config/local_notifications/local_notifications.dart';
 part 'notifications_event.dart';
 part 'notifications_state.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-
-  print("Handling a background message: ${message.messageId}");
 }
 
 class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
@@ -63,7 +62,8 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
       provisional: false,
       sound: true,
     );
-
+    // requestPermissions local notifications
+    await requestPermissionLocalNotifications();
     add(  NotificationStatusChange( settings.authorizationStatus ));
   }
 
